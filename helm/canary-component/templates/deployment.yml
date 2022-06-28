@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-{{ .Values.version }}
+spec:
+  selector:
+    matchLabels:
+      app: canary-component
+  replicas: {{ .Values.replicas }}
+  template:
+    metadata:
+      labels:
+        app: canary-component
+        version: {{ .Values.version | quote }}
+    spec:
+      containers:
+        - name: nginx
+          image: {{ .Values.image }}
+          resources:
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+              cpu: {{ .Values.resources.limits.cpu }}
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
+          ports:
+          - containerPort: {{ .Values.service.ports.containerPort }}
+          volumeMounts:
+          - mountPath: /usr/share/nginx/html
+            name: index-html
+      volumes:
+      - name: index-html
+        configMap:
+          name: {{ template "fullname" . }}-cm
