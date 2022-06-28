@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary-component-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: canary-component
+  ports:
+    - port: 8888
+      targetPort: 80

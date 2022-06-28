@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "fullname" . }}-cm
+data:
+  index.html: |
+    This is version {{ .Values.version }}

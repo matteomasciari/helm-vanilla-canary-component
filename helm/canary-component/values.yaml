@@ -1,0 +1,18 @@
+---
+version: 1
+image: nginx:alpine
+resources:
+  limits:
+    memory: "128Mi"
+    cpu: "50m"
+  requests:
+    memory: "128Mi"
+    cpu: "50m"
+service:
+  enabled: False
+  ports:
+    servicePort: 8888
+    containerPort: 80
+ingress:
+  enabled: False
+  url: canary.demo.com

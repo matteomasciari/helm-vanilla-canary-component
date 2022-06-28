@@ -1,0 +1,13 @@
+{{- if .Values.service.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: canary-component
+  ports:
+    - port: {{ .Values.service.ports.servicePort }}
+      targetPort: {{ .Values.service.ports.containerPort }}
+{{- end }}
